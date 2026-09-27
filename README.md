@@ -134,6 +134,21 @@ FlowLayout(spacing: 8) {
 }
 ```
 
+## Selectable Filter Chips
+
+`FlowLayout` works well for interactive filters because each chip remains a normal SwiftUI view:
+
+```swift
+FlowLayout(spacing: 8) {
+    ForEach(filters, id: \.self) { filter in
+        Button(filter) {
+            toggle(filter)
+        }
+        .buttonStyle(.bordered)
+    }
+}
+```
+
 ## How It Works
 
 `FlowLayout` conforms to SwiftUI's `Layout` protocol.
@@ -168,12 +183,13 @@ FlowLayout(
 )
 ```
 
-## Example
+## Examples
 
-A complete tag-cloud example is included in:
+Two complete examples are included:
 
 ```
 Examples/TagCloudExample.swift
+Examples/SelectableFilterChipsExample.swift
 ```
 
 ## Testing
@@ -184,6 +200,8 @@ The package includes unit tests for:
 - Leading placement
 - Center alignment
 - Trailing alignment
+- Mixed item heights
+- Oversized items
 - Empty content
 - Spacing normalization
 
