@@ -54,6 +54,40 @@ final class FlowLayoutTests: XCTestCase {
         XCTAssertEqual(result.frames[1].origin.x, 70, accuracy: 0.0001)
     }
 
+    func testMixedItemHeightsUseTallestItemForNextRow() {
+        let result = FlowLayoutEngine.layout(
+            sizes: [
+                CGSize(width: 50, height: 20),
+                CGSize(width: 50, height: 40),
+                CGSize(width: 50, height: 10)
+            ],
+            containerWidth: 110,
+            horizontalSpacing: 10,
+            verticalSpacing: 8,
+            alignment: .leading
+        )
+
+        XCTAssertEqual(result.frames[2].origin.y, 48, accuracy: 0.0001)
+        XCTAssertEqual(result.size.height, 58, accuracy: 0.0001)
+    }
+
+    func testOversizedItemRemainsInItsOwnRow() {
+        let result = FlowLayoutEngine.layout(
+            sizes: [
+                CGSize(width: 140, height: 20),
+                CGSize(width: 30, height: 20)
+            ],
+            containerWidth: 100,
+            horizontalSpacing: 8,
+            verticalSpacing: 6,
+            alignment: .leading
+        )
+
+        XCTAssertEqual(result.frames[0].origin.y, 0, accuracy: 0.0001)
+        XCTAssertEqual(result.frames[1].origin.y, 26, accuracy: 0.0001)
+        XCTAssertEqual(result.size.width, 100, accuracy: 0.0001)
+    }
+
     func testEmptyLayoutHasZeroSize() {
         let result = FlowLayoutEngine.layout(
             sizes: [],
